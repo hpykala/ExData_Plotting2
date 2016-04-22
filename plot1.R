@@ -7,7 +7,7 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 sums <- tapply(NEI$Emissions,NEI$year,sum)
-yearly <- data.frame(year = as.numeric(names(sum)), pm25tot = sum/(10^6))
+yearly <- data.frame(year = as.numeric(names(sums)), pm25tot = sums/(10^6))
 
 png("plot1.png")
 plot(yearly$year, 
