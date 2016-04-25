@@ -22,6 +22,7 @@ baltimore <- subset(NEI, fips == "24510")
 #calculate sums per year and type
 setkey(baltimore,year,type)
 sums <- baltimore[,sum(Emissions),by=key(baltimore)]
+setnames(sums, "V1", "totalpm25")
 
 png("plot3.png")
 
