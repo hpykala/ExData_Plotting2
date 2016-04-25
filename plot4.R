@@ -26,6 +26,8 @@ NEICoalBurn <- data.table(subset(NEI, NEI$SCC %in% SCCCoalBurn))
 # sum by year
 yearly <- NEICoalBurn[,sum(Emissions), by=year]
 setnames(yearly,"V1","totalpm25")
+
+#scale emissions to thousands of tons
 yearly[,totalpm25 := totalpm25/1000]
 
 png("plot4.png")
