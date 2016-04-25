@@ -29,8 +29,8 @@ png("plot3.png")
 # Faceted scatterplots with trend line
 qplot(year, totalpm25, data=sums,
       facets=.~type, 
-      main = "Yearly emissions in the Baltimore City by type",
+      main = "Yearly PM2.5 emissions in the Baltimore City by type of source",
       xlab = "Year",
-      ylab = "PM2.5 emissions") +
+      ylab = "PM2.5 emissions (ton)") +
     geom_smooth(method = "lm")
 dev.off()
