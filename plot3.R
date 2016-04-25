@@ -25,5 +25,11 @@ sums <- baltimore[,sum(Emissions),by=key(baltimore)]
 
 png("plot3.png")
 
-qplot(year,totalpm25,data=sums,facets=.~type)+geom_smooth(method = "lm")
+# Faceted scatterplots with trend line
+qplot(year, totalpm25, data=sums,
+      facets=.~type, 
+      main = "Yearly emissions in the Baltimore City by type",
+      xlab = "Year",
+      ylab = "PM2.5 emissions") +
+    geom_smooth(method = "lm")
 dev.off()
