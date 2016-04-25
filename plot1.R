@@ -1,6 +1,7 @@
 ##Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? 
 ##Using the base plotting system, make a plot showing the total PM2.5 emission 
 ##from all sources for each of the years 1999, 2002, 2005, and 2008.
+library(data.table)
 
 #download data if needed
 if(!file.exists("summarySCC_PM25.rds")) {
@@ -10,12 +11,14 @@ if(!file.exists("summarySCC_PM25.rds")) {
 
 #read data
 NEI <- readRDS("summarySCC_PM25.rds")
+NEI <- data.table(NEI)
 
 #calculate yearly sums to find total pm2.5 emissions
-sums <- tapply(NEI$Emissions,NEI$year,sum)
+yearly <- NEI[,sum(Emissions), by = year]
+setnames(yearly, "V1", "pm25tot")
 
-#make dataframe and scale total emissions to millions of tons
-yearly <- data.frame(year = as.numeric(names(sums)), pm25Mton = sums/(10^6))
+#scale total emissions to millions of tons
+yearly[,pm25tot := pm25tot/10^6]
 
 png("plot1.png")
 
@@ -25,7 +28,7 @@ plot(yearly$year,
      pch = 19,
      xlab = "Year", 
      ylab = "Total PM2.5 emissions (Million tons)", 
-     main = "Total yearly pm2.5 emissions")
+     main = "Total yearly PM2.5 emissions")
 
 #add trend line to show clear downward trend
 abline(lm(pm25tot ~ year, data = yearly))
